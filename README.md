@@ -539,7 +539,7 @@ In some sections of the content I will place a subsection for standalone and ano
     /core-service=platform-mbean/type=runtime:read-attribute(name=system-properties)
     ```
 
-### DOMAIN
+### Domain
 
 * Add, read, remove, write-attribute affecting all hosts and server instances in domain (the system property will be added in domain.xml)
     
@@ -715,9 +715,85 @@ In some sections of the content I will place a subsection for standalone and ano
 
 ## Logging
 
-Working on this section
+### Standalone
 
+* Change a logger log level, for example root-logger to DEBUG:
 
+    ```
+    /subsystem=logging/root-logger=ROOT/:write-attribute(name=level,value=DEBUG)
+    ```
+
+* Create log-category for a specific package:
+
+    ```
+    /subsystem=logging/logger=package.name/:add(category=package.name,level=INFO,use-parent-handlers=true)
+    ```
+
+* Change log level for that package to DEBUG:
+
+    ```
+    /subsystem=logging/logger=package.name:change-log-level(level=DEBUG)
+    ```
+
+* Take a look at the following interesting operations you can perform since Jboss EAP 7
+    
+    * List logs available for a Jboss instance 
+
+    ```
+    /subsystem=logging:list-log-files
+    ```
+
+    * Read last 5 lines of server.log 
+
+    ```
+    /subsystem=logging:read-log-file(name=server.log,lines=5,skip=0)
+    ```
+
+    * Make a tail showing the last 10 lines of server.log 
+    ```
+    /subsystem=logging:read-log-file(name=server.log,tail=true,lines=10,skip=0)
+    ```
+
+### Domain
+
+* Change the log level of the root-logger to DEBUG in the profile my-app (this profile name will change in your case):
+   
+    ```
+    /profile=my-app/subsystem=logging/root-logger=ROOT:change-root-log-level(level=DEBUG)
+    ```
+
+* Add log-category for a package:
+
+    ```
+    /profile=my-app/subsystem=logging/logger=package.name/:add(category=package.name,level=INFO,use-parent-handlers=true)
+    ```
+
+* Change log level of a log-category:
+
+    ```
+    /profile=my-app/subsystem=logging/logger=package.name:change-log-level(level=DEBUG)
+    ```
+
+* Also in domain mode, you can perform the following operations since Jboss EAP 7
+
+    * List logs available for a Jboss instance server-one in master host
+
+    ```
+    /host=master/server=server-one/subsystem=logging:list-log-files
+    ```
+
+    * Read last 5 lines of server.log of server-one
+
+    ```
+    /host=master/server=server-one/subsystem=logging:read-log-file(name=server.log,lines=5,skip=0)
+    ```
+
+    * Make a tail showing the last 10 lines of server-one's server.log 
+
+    ```
+    /host=master/server=server-one/subsystem=logging:read-log-file(name=server.log,tail=true,lines=10,skip=0)
+    ```
+    
 ## License
 
 This repo is licensed under [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)
