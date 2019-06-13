@@ -251,12 +251,25 @@ In some sections of the content I will place a subsection for standalone and ano
     ```
     deployment-info
     undeploy -l
+    ls deployment
     ```
     
 * Undeploy application
     
     ```
     undeploy example.war
+    ```
+
+* Disable application
+    
+    ```
+    undeploy example.war --keep-content
+    ```
+
+* Enable a disabled application
+    
+    ```
+    deploy --name=example.war
     ```
 
 ### Domain
