@@ -240,10 +240,16 @@ In some sections of the content I will place a subsection for standalone and ano
     deploy /opt/jboss/example_apps/appbinaries/example.war
     ```
     
-* Redeploy (force deployment)
+* Redeploy (force deployment when application is already deployed)
     
     ```
     deploy /opt/jboss/example_apps/appbinaries/example.war --force
+    ```
+    
+* Deploy an application but leave it disabled
+    
+    ```
+    deploy /opt/jboss/example_apps/appbinaries/example.war --disabled
     ```
     
 * Check deployments
@@ -251,12 +257,25 @@ In some sections of the content I will place a subsection for standalone and ano
     ```
     deployment-info
     undeploy -l
+    ls deployment
     ```
     
 * Undeploy application
     
     ```
     undeploy example.war
+    ```
+
+* Disable application
+    
+    ```
+    undeploy example.war --keep-content
+    ```
+
+* Enable a disabled application
+    
+    ```
+    deploy --name=example.war
     ```
 
 ### Domain
